@@ -8,6 +8,26 @@ export const api = axios.create({
 
 export const fetchUsers = async (): Promise<User[]> => {
 	const response = await api.get('');
-	console.log(response.data);
-	return response.data;
+	return parseUserData(response.data.users);
 };
+
+type FetchedUser = {
+	id: string;
+	firstName: string;
+	lastName: string;
+	address: {
+		city: string;
+	};
+	birthDate: string;
+};
+
+function parseUserData(users: Array<FetchedUser>): Array<User> {
+	return Array.from(users, (u) => {
+		return {
+			id: u.id,
+			name: u.firstName.concat(' ', u.lastName),
+			city: u.address.city,
+			birthday: u.birthDate,
+		};
+	});
+}
