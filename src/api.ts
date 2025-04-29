@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { User } from './types';
+import { User, FetchedUser } from './types';
 
 export const api = axios.create({
 	baseURL: 'https://dummyjson.com/users',
@@ -9,16 +9,6 @@ export const api = axios.create({
 export const fetchUsers = async (): Promise<User[]> => {
 	const response = await api.get('');
 	return parseUserData(response.data.users);
-};
-
-type FetchedUser = {
-	id: string;
-	firstName: string;
-	lastName: string;
-	address: {
-		city: string;
-	};
-	birthDate: string;
 };
 
 function parseUserData(users: Array<FetchedUser>): Array<User> {
