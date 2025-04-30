@@ -3,6 +3,7 @@ import { fetchUsers } from '../../api';
 import { User } from '../../types';
 import styles from './UsersWrapper.module.css';
 import UsersTable from '../UsersTable/UsersTable';
+import { searchByName, searchByCity, pickCities } from '../../utils';
 
 const UsersPanel: React.FC = () => {
 	const [users, setUsers] = useState<User[]>([]);
@@ -73,26 +74,3 @@ const UsersPanel: React.FC = () => {
 };
 
 export default UsersPanel;
-
-function searchByName(users: User[], param: string) {
-	const searchedParam = param.toLowerCase();
-	return users.filter(
-		(user) =>
-			user.firstName.toLowerCase().includes(searchedParam) ||
-			user.lastName.toLowerCase().includes(searchedParam)
-	);
-}
-
-function searchByCity(users: User[], param: string) {
-	return users.filter((user) => user.city === param);
-}
-
-function pickCities(users: Array<User>) {
-	const cities = new Array<string>();
-	users.forEach((u) => {
-		if (!cities.includes(u.city)) {
-			cities.push(u.city);
-		}
-	});
-	return cities;
-}
