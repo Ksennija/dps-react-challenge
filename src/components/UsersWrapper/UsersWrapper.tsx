@@ -6,37 +6,65 @@ import UsersTable from '../UsersTable/UsersTable';
 
 const UsersPanel: React.FC = () => {
 	const [users, setUsers] = useState<User[]>([]);
-	const [searchByNameParam, setSearchByNameParam] = useState<string>('');
+	const [searchNameParam, setSearchNameParam] = useState<string>('');
+	const [searchCityParam, setSearchCityParam] = useState<string>('');
+	const [cities, setCities] = useState<string[]>([]);
 
 	useEffect(() => {
-		async function fetchAllUsers() {
-			let selectedUsers = await fetchUsers();
-			if (searchByNameParam) {
-				selectedUsers = searchByName(selectedUsers, searchByNameParam);
+		async function fetchUsersData() {
+			const fetchedUsers = await fetchUsers();
+
+			setCities(pickCities(fetchedUsers));
+			let selectedUsers = [...fetchedUsers];
+			if (searchNameParam) {
+				selectedUsers = searchByName(selectedUsers, searchNameParam);
+			}
+			if (searchCityParam) {
+				selectedUsers = searchByCity(selectedUsers, searchCityParam);
 			}
 			setUsers(selectedUsers);
 		}
 
-		fetchAllUsers();
-	}, [searchByNameParam]);
+		fetchUsersData();
+	}, [searchNameParam, searchCityParam]);
 
 	const handleSearchChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	): void => {
-		setSearchByNameParam(e.target.value);
+		setSearchNameParam(e.target.value);
 	};
 
+	const handleCitySelect = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	): void => {
+		setSearchCityParam(e.target.value);
+	};
 	return (
 		<div className={styles.usersWrapper}>
 			<div className={styles.searchPanel}>
 				<div>
+					Name
 					<input
-						id="q"
 						aria-label="Search name"
 						placeholder="Search"
 						type="search"
 						onChange={handleSearchChange}
 					/>
+				</div>
+				<div className="dropdown">
+					<label>
+						City
+						<select name="selectedCity" onChange={handleCitySelect}>
+							<option className={styles.emptyCity} value="">
+								Select city
+							</option>
+							{cities?.map((city) => (
+								<option key={city} value={city}>
+									{city}
+								</option>
+							))}
+						</select>
+					</label>
 				</div>
 			</div>
 			<UsersTable users={users} />
@@ -53,4 +81,18 @@ function searchByName(users: User[], param: string) {
 			user.firstName.toLowerCase().includes(searchedParam) ||
 			user.lastName.toLowerCase().includes(searchedParam)
 	);
+}
+
+function searchByCity(users: User[], param: string) {
+	return users.filter((user) => user.city === param);
+}
+
+function pickCities(users: Array<User>) {
+	const cities = new Array<string>();
+	users.forEach((u) => {
+		if (!cities.includes(u.city)) {
+			cities.push(u.city);
+		}
+	});
+	return cities;
 }
