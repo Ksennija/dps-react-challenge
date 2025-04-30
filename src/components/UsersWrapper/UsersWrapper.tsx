@@ -41,16 +41,18 @@ const UsersPanel: React.FC = () => {
 		setSearchCityParam(e.target.value);
 	};
 	return (
-		<div className={styles.usersWrapper}>
+		<>
 			<div className={styles.searchPanel}>
 				<div>
-					Name
-					<input
-						aria-label="Search name"
-						placeholder="Search"
-						type="search"
-						onChange={handleSearchChange}
-					/>
+					<label>
+						Name
+						<input
+							aria-label="Search name"
+							placeholder="Search"
+							type="search"
+							onChange={handleSearchChange}
+						/>
+					</label>
 				</div>
 				<div className="dropdown">
 					<label>
@@ -67,9 +69,15 @@ const UsersPanel: React.FC = () => {
 						</select>
 					</label>
 				</div>
+				<div className="checkbox">
+					<label>
+						Highlight oldest per city
+						<input type="checkbox" name="myCheckbox" />
+					</label>
+				</div>
 			</div>
 			<UsersTable users={users} />
-		</div>
+		</>
 	);
 };
 
