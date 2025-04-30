@@ -13,18 +13,18 @@ const UsersTable: React.FC<Props> = ({ users }) => {
 	return (
 		<div className={styles.table}>
 			<div className={`${styles.row} ${styles.heading}`}>
-				<div className={styles.sell}>Name</div>
-				<div className={styles.sell}>City</div>
-				<div className={styles.sell}>Birthday</div>
+				<div className={styles.cell}>Name</div>
+				<div className={styles.cell}>City</div>
+				<div className={styles.cell}>Birthday</div>
 			</div>
 			<div className={styles.rows}>
 				{users?.map((user) => (
 					<div key={user.id} className={styles.row}>
-						<div className={styles.sell}>
+						<div className={styles.cell}>
 							{user.firstName.concat(' ', user.lastName)}
 						</div>
-						<div className={styles.sell}>{user.city}</div>
-						<div className={styles.sell}>
+						<div className={styles.cell}>{user.city}</div>
+						<div className={styles.cell}>
 							{formatDate(user.birthday)}
 						</div>
 					</div>

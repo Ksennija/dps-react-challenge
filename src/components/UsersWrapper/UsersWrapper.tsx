@@ -49,7 +49,7 @@ const UsersPanel: React.FC = () => {
 						<input
 							aria-label="Search name"
 							placeholder="Search"
-							type="text"
+							type="search"
 							onChange={handleSearchChange}
 						/>
 					</label>
