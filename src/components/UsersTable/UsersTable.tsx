@@ -6,6 +6,10 @@ export type Props = {
 };
 
 const UsersTable: React.FC<Props> = ({ users }) => {
+	if (users.length === 0) {
+		return <p>The list is empty 🙁</p>;
+	}
+
 	return (
 		<div className={styles.table}>
 			<div className={`${styles.row} ${styles.heading}`}>
@@ -15,7 +19,9 @@ const UsersTable: React.FC<Props> = ({ users }) => {
 			</div>
 			{users?.map((user) => (
 				<div key={user.id} className={styles.row}>
-					<div className={styles.sell}>{user.name}</div>
+					<div className={styles.sell}>
+						{user.firstName.concat(' ', user.lastName)}
+					</div>
 					<div className={styles.sell}>{user.city}</div>
 					<div className={styles.sell}>
 						{formatDate(user.birthday)}
@@ -26,11 +32,11 @@ const UsersTable: React.FC<Props> = ({ users }) => {
 	);
 };
 
+export default UsersTable;
+
 function formatDate(date: string) {
 	const formattedDate = new Date(date);
 	return `${formattedDate.getDate()}.${
 		formattedDate.getMonth() + 1
 	}.${formattedDate.getFullYear()}`;
 }
-
-export default UsersTable;

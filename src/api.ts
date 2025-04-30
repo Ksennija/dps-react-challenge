@@ -15,7 +15,8 @@ function parseUserData(users: Array<FetchedUser>): Array<User> {
 	return Array.from(users, (u) => {
 		return {
 			id: u.id,
-			name: u.firstName.concat(' ', u.lastName),
+			firstName: u.firstName,
+			lastName: u.lastName,
 			city: u.address.city,
 			birthday: u.birthDate,
 		};
