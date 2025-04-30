@@ -70,8 +70,9 @@ const UsersPanel: React.FC = () => {
 					</label>
 				</div>
 				<div className="checkbox">
-					<label>
-						Highlight oldest per city
+					<label className={styles.checkbox}>
+						Highlight oldest <br />
+						per city
 						<input type="checkbox" name="myCheckbox" />
 					</label>
 				</div>

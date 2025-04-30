@@ -8,4 +8,16 @@
 
 .searchPanel {
 	display: flex;
+	text-align: left;
+	column-gap: 20px;
+}
+
+.checkbox {
+	display: flex;
+	align-items: center;
+	padding-top: 20px;
+}
+
+.checkbox input {
+	transform: scale(1.5);
 }
