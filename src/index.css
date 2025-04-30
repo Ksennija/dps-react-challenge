@@ -40,12 +40,11 @@ input,
 textarea,
 select {
 	border-radius: 8px;
-	border: 1px solid transparent;
+	border: 1px solid #1a1a1a;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
 	cursor: pointer;
 	transition: border-color 0.25s;
 }
@@ -60,7 +59,7 @@ select {
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+	background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
 	background-repeat: no-repeat;
 	background-position-x: 98%;
 	background-position-y: 50%;
@@ -89,12 +88,6 @@ textarea {
 	box-sizing: border-box;
 }
 
-input[type='text'],
-select,
-textarea {
-	border: 1px solid #ffffff;
-}
-
 input:focus,
 textarea:focus {
 	border: 1px solid #646cff;
@@ -108,7 +101,10 @@ textarea:focus {
 	a:hover {
 		color: #747bff;
 	}
-	button {
+
+	button,
+	input,
+	select {
 		background-color: #f9f9f9;
 	}
 }
