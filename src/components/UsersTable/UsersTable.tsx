@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
-import { fetchUsers } from '../api';
-import { User } from '../types';
+import { User } from '../../types';
 import styles from './UsersTable.module.css';
 
-const UsersTable: React.FC = () => {
-	//query: string | null
-	const [users, setUsers] = useState<User[]>([]);
+export type Props = {
+	users: User[];
+};
 
-	useEffect(() => {
-		async function fetchAllUsers() {
-			const fetchedUsers = await fetchUsers();
-			setUsers(fetchedUsers);
-			console.log(users);
-		}
-
-		fetchAllUsers();
-	}, []);
-
+const UsersTable: React.FC<Props> = ({ users }) => {
 	return (
 		<div className={styles.table}>
 			<div className={`${styles.row} ${styles.heading}`}>
