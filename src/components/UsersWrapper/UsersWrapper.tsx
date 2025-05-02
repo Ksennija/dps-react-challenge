@@ -29,6 +29,19 @@ const UsersPanel: React.FC = () => {
 	initOldestPerCity(users, cityOptions); // user property isOldest (per city)
 	const filteredUsers = getFilteredUsers(users, nameFilter, cityFilter);
 
+	const debounce = (
+		onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+	) => {
+		let timeout: number;
+		return (e: React.ChangeEvent<HTMLInputElement>) => {
+			const form = e;
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				onChange(form);
+			}, 1000);
+		};
+	};
+
 	const handleSearchChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	): void => {
@@ -55,7 +68,7 @@ const UsersPanel: React.FC = () => {
 							aria-label="Search name"
 							placeholder="Search"
 							type="search"
-							onChange={handleSearchChange}
+							onChange={debounce((e) => handleSearchChange(e))}
 						/>
 					</label>
 				</div>
