@@ -3,43 +3,48 @@ import { fetchUsers } from '../../api';
 import { User } from '../../types';
 import styles from './UsersWrapper.module.css';
 import UsersTable from '../UsersTable/UsersTable';
-import { searchByName, searchByCity, pickCities } from '../../utils';
+import {
+	getFilteredUsers,
+	getCityOptions,
+	initOldestPerCity,
+} from '../../utils';
 
 const UsersPanel: React.FC = () => {
 	const [users, setUsers] = useState<User[]>([]);
-	const [searchNameParam, setSearchNameParam] = useState<string>('');
-	const [searchCityParam, setSearchCityParam] = useState<string>('');
-	const [cities, setCities] = useState<string[]>([]);
+	const [nameFilter, setNameFilter] = useState('');
+	const [cityFilter, setCityFilter] = useState('');
+	const [isHighlighted, setIsHighlighted] = useState(false);
 
 	useEffect(() => {
 		async function fetchUsersData() {
 			const fetchedUsers = await fetchUsers();
 
-			setCities(pickCities(fetchedUsers));
-			let selectedUsers = [...fetchedUsers];
-			if (searchNameParam) {
-				selectedUsers = searchByName(selectedUsers, searchNameParam);
-			}
-			if (searchCityParam) {
-				selectedUsers = searchByCity(selectedUsers, searchCityParam);
-			}
-			setUsers(selectedUsers);
+			setUsers(fetchedUsers);
 		}
 
 		fetchUsersData();
-	}, [searchNameParam, searchCityParam]);
+	}, []);
+
+	const cityOptions = getCityOptions(users); // cities array for filter by city
+	initOldestPerCity(users, cityOptions); // user property isOldest (per city)
+	const filteredUsers = getFilteredUsers(users, nameFilter, cityFilter);
 
 	const handleSearchChange = (
 		e: React.ChangeEvent<HTMLInputElement>
 	): void => {
-		setSearchNameParam(e.target.value);
+		setNameFilter(e.target.value);
 	};
 
 	const handleCitySelect = (
 		e: React.ChangeEvent<HTMLSelectElement>
 	): void => {
-		setSearchCityParam(e.target.value);
+		setCityFilter(e.target.value);
 	};
+
+	const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		setIsHighlighted(e.target.checked);
+	};
+
 	return (
 		<>
 			<div className={styles.searchPanel}>
@@ -61,7 +66,7 @@ const UsersPanel: React.FC = () => {
 							<option className={styles.emptyCity} value="">
 								Select city
 							</option>
-							{cities?.map((city) => (
+							{cityOptions.map((city) => (
 								<option key={city} value={city}>
 									{city}
 								</option>
@@ -73,11 +78,16 @@ const UsersPanel: React.FC = () => {
 					<label className={styles.checkbox}>
 						Highlight oldest <br />
 						per city
-						<input type="checkbox" name="myCheckbox" />
+						<input
+							type="checkbox"
+							name="highlightCheckbox"
+							onChange={handleCheckbox}
+							checked={isHighlighted}
+						/>
 					</label>
 				</div>
 			</div>
-			<UsersTable users={users} />
+			<UsersTable users={filteredUsers} isHighlighted={isHighlighted} />
 		</>
 	);
 };

@@ -1,11 +1,12 @@
 import { User } from '../../types';
 import styles from './UsersTable.module.css';
 
-export type Props = {
+export type UserTableProps = {
 	users: User[];
+	isHighlighted: boolean;
 };
 
-const UsersTable: React.FC<Props> = ({ users }) => {
+const UsersTable: React.FC<UserTableProps> = ({ users, isHighlighted }) => {
 	if (users.length === 0) {
 		return <p>The list is empty 🙁</p>;
 	}
@@ -19,7 +20,14 @@ const UsersTable: React.FC<Props> = ({ users }) => {
 			</div>
 			<div className={styles.rows}>
 				{users?.map((user) => (
-					<div key={user.id} className={styles.row}>
+					<div
+						key={user.id}
+						className={`${styles.row} ${
+							isHighlighted && user.isOldest
+								? styles.highlighted
+								: ''
+						}`}
+					>
 						<div className={styles.cell}>
 							{user.firstName.concat(' ', user.lastName)}
 						</div>

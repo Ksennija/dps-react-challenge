@@ -4,6 +4,7 @@ export type User = {
 	lastName: string;
 	city: string;
 	birthday: string;
+	isOldest?: boolean;
 };
 
 export type FetchedUser = {
