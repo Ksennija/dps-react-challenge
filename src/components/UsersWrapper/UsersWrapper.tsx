@@ -9,7 +9,7 @@ import {
 	initOldestPerCity,
 } from '../../utils';
 
-const UsersPanel: React.FC = () => {
+const UsersWrapper: React.FC = () => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [nameFilter, setNameFilter] = useState('');
 	const [cityFilter, setCityFilter] = useState('');
@@ -109,4 +109,4 @@ const UsersPanel: React.FC = () => {
 	);
 };
 
-export default UsersPanel;
+export default UsersWrapper;
