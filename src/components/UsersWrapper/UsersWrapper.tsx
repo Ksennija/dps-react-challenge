@@ -25,8 +25,9 @@ const UsersPanel: React.FC = () => {
 		fetchUsersData();
 	}, []);
 
-	const cityOptions = getCityOptions(users); // cities array for filter by city
-	initOldestPerCity(users, cityOptions); // user property isOldest (per city)
+	const cityOptions = getCityOptions(users); // cities' array for filter by city
+	initOldestPerCity(users, cityOptions); // user's property isOldest (per city)
+
 	const filteredUsers = getFilteredUsers(users, nameFilter, cityFilter);
 
 	const debounce = (
@@ -65,7 +66,7 @@ const UsersPanel: React.FC = () => {
 					<label>
 						Name
 						<input
-							aria-label="Search name"
+							aria-label="Search by name"
 							placeholder="Search"
 							type="search"
 							onChange={debounce((e) => handleSearchChange(e))}
@@ -75,10 +76,12 @@ const UsersPanel: React.FC = () => {
 				<div className="dropdown">
 					<label>
 						City
-						<select name="selectedCity" onChange={handleCitySelect}>
-							<option className={styles.emptyCity} value="">
-								Select city
-							</option>
+						<select
+							aria-label="Search by city"
+							name="selectedCity"
+							onChange={handleCitySelect}
+						>
+							<option value="">Select city</option>
 							{cityOptions.map((city) => (
 								<option key={city} value={city}>
 									{city}
@@ -92,8 +95,9 @@ const UsersPanel: React.FC = () => {
 						Highlight oldest <br />
 						per city
 						<input
+							aria-label="Highlight oldest"
 							type="checkbox"
-							name="highlightCheckbox"
+							name="highlightedCheckbox"
 							onChange={handleCheckbox}
 							checked={isHighlighted}
 						/>
