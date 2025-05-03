@@ -13,7 +13,7 @@ const UsersTable: React.FC<UserTableProps> = ({ users, isHighlighted }) => {
 
 	return (
 		<div className={styles.table}>
-			<div className={`${styles.row} ${styles.heading}`}>
+			<div className={styles.heading}>
 				<div className={styles.cell}>Name</div>
 				<div className={styles.cell}>City</div>
 				<div className={styles.cell}>Birthday</div>
