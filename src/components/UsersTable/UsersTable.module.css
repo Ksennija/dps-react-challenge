@@ -4,6 +4,7 @@
 	border: 1px solid gray;
 	border-radius: 20px;
 	overflow: auto;
+	/* height: 100%; // for fixed table height */
 }
 
 .row {
